@@ -1,0 +1,218 @@
+[
+{
+	"uri": "//localhost:1313/",
+	"title": "Building CI/CD Pipeline For ReactJs Project on GitLab Using AWS Services (ECR, Fargate, EC2)",
+	"tags": [],
+	"description": "",
+	"content": "CI/CD Pipeline For ReactJs Project Using AWS Services Overview After completing this guide, I hope the student team can implement CI/CD for their project. It\u0026rsquo;s designed to minimize costs and can be used for free for up to 12 months with an AWS account\u0026rsquo;s free tier.\n1. Introduction\n2. Architechture\n3. Prerequisites\n4. Create Service\n5. Setup Service 6. Clean resource\n"
+},
+{
+	"uri": "//localhost:1313/1-introduce/",
+	"title": "Introduction",
+	"tags": [],
+	"description": "",
+	"content": "Students working on subject projects at school can gain valuable experience and become familiar with the CI/CD process early on. It’s also highly affordable, as the costs are minimal, if not completely free.\n1.1. What is CI/CD ?\n1.2. Benefit Of CI/CD\n"
+},
+{
+	"uri": "//localhost:1313/1-introduce/1.1-whatiscicd/",
+	"title": "What is CI/CD?",
+	"tags": [],
+	"description": "",
+	"content": "CI/CD (Continuous Integration/Continuous Deployment) is the process of automating the construction, testing, and deployment of software.\nContinuous Integration (CI): Automatically integrate source code from multiple developers into a main branch, testing to ensure there are no errors. Continuous Deployment (CD): Once the code is integrated, the deployment process to the production environment is also automated. CI/CD helps accelerate development, reduce the risk of errors, and improve software quality through automating the development and deployment process.\n"
+},
+{
+	"uri": "//localhost:1313/1-introduce/1.2-benefitofcicd/",
+	"title": "Benefit Of CI/CD",
+	"tags": [],
+	"description": "",
+	"content": "Picture hosting a Razor Pages web app with an unexpected spike in user traffic. Without CI/CD, scaling to meet the demand would require manual code updates, testing, and deployments—a slow, error-prone process. With CI/CD, all of this is automated, allowing the app to scale smoothly and stay responsive.\nHere are some key advantages of using CI/CD with tools like GitHub, Jenkins, and SonarQube:\nReduced time and effort: Automate building, testing, and deploying, giving developers more time to focus on coding. Improved code quality: Automated tests catch bugs early, preventing costly fixes later. Faster updates: Release new features and fixes swiftly, keeping your app current and users happy. Enhanced security: Automatically scan for vulnerabilities and address them before they become issues. Better collaboration: CI/CD promotes seamless teamwork and continuous feedback across development teams. Embrace the power of CI/CD to keep your Razor Pages app running smoothly and efficiently!\n"
+},
+{
+	"uri": "//localhost:1313/2-architecture/",
+	"title": "Architecture",
+	"tags": [],
+	"description": "",
+	"content": "Let take a quick look at our architecture\nContent\n2.1. Designing CI/CD Solution\n2.2. Understanding Resources Using in this Architecture\n"
+},
+{
+	"uri": "//localhost:1313/2-architecture/2.1--designing-ci-cd-solution/",
+	"title": "Designing CI/CD Solution",
+	"tags": [],
+	"description": "",
+	"content": "Designing CI/CD Solution Architecture Overview for CI/CD Pipeline with Jenkins, Docker Hub, and SonarQube.\nThe diagram illustrates a CI/CD pipeline designed to deploy a Razor Pages web application hosted on an EC2 instance within AWS. This setup leverages Jenkins for continuous integration, Docker Hub for container image management, and SonarQube for code quality and security analysis.\nPipeline Phases: Build: Jenkins pulls the latest code from the GitHub repository, runs tests, and builds the project. During this process, SonarQube is integrated to analyze the codebase for potential quality and security issues. Push to Docker Hub: Once the build is complete, Jenkins creates a Docker image from the application and pushes it to Docker Hub. This image contains the application and its dependencies, making it ready for deployment. Deploy: The newly created Docker image is pulled from Docker Hub and deployed to an EC2 instance in a public subnet. This EC2 instance runs the Razor Pages application, and it is accessible over the Internet via port 80. Job Execution Environment: Jenkins: Hosted on an EC2 instance, Jenkins automates the build, test, and deploy phases. It triggers the SonarQube analysis during the build process and interacts with Docker Hub to manage container images. SonarQube: Deployed on a separate EC2 instance, SonarQube performs static code analysis during the Jenkins build phase, ensuring code quality and identifying any security vulnerabilities before the application is deployed. Amazon RDS (Relational Database Service): The application interacts with a database hosted on RDS, located in a private subnet to enhance security. This private database is only accessible by the EC2 instance hosting the web application. How it Works: Code Commit: A developer commits code changes to the GitHub repository. Jenkins Pipeline Trigger: Jenkins detects the new commit and triggers the CI/CD pipeline defined in the Jenkins job configuration. Code Analysis and Build: Jenkins pulls the code, performs a static analysis using SonarQube, and runs tests. Once successful, Jenkins builds the project and creates a Docker image. Image Push to Docker Hub: The built Docker image is pushed to Docker Hub, where it is stored and versioned. Deployment to EC2: Jenkins shh to EC2 and will pull and run the latest Docker image from .The EC2 instance is connected to the Internet via an Internet Gateway, making the hosted web application accessible via port 80. Database Interaction: The web application on EC2 interacts with the RDS database in the private subnet, ensuring data is securely managed without direct exposure to the public Internet. User Access: End users access the web application over the Internet through the EC2 instance running in the public subnet. Key Components in the Architecture: EC2 (Elastic Compute Cloud): Hosts the Razor Pages web app and Jenkins. Docker Hub: Stores the Docker image created from the application. Jenkins: Manages the CI/CD pipeline, integrating with GitHub, Docker Hub, and SonarQube. SonarQube: Performs code quality checks to ensure reliable and secure deployments. RDS: Provides a private database that the application can securely access. By implementing this architecture, you ensure a seamless and automated process for building, testing, and deploying your web application, all while maintaining code quality and security through continuous integration and continuous deployment.\n"
+},
+{
+	"uri": "//localhost:1313/2-architecture/2.2-understanding-resources-using-in-this-architecture/",
+	"title": "Understanding Resources Using in this Architecture",
+	"tags": [],
+	"description": "",
+	"content": "Elastic Compute Cloud (EC2) In this architecture, AWS EC2 provides scalable virtual servers. An EC2 instance hosts the public-app (the web application) and runs Jenkins to manage CI/CD jobs. This allows Jenkins to execute the pipeline, including building, testing, and deploying the web application.\nRelational Database Service (RDS) The private-db is hosted on AWS RDS, which manages your database infrastructure. It is placed in a private subnet to prevent direct internet access, enhancing security for sensitive data. The application running on EC2 will communicate with the database securely within the same VPC using appropriate security groups and IAM roles ( not use in this guide).\nDocker Hub Docker Hub serves as a container registry for storing your Docker images. After building the application through Jenkins, the Docker image is pushed to Docker Hub, which is then pulled and deployed onto the EC2 instance. This decouples the container storage from AWS\u0026rsquo;s native container services, providing flexibility but may require additional security configurations.\nGitHub GitHub is used as the version control system for hosting your project’s source code. Jenkins is integrated with GitHub, allowing it to detect changes in the repository (such as a new pull request or a commit to a branch). Once a change is detected, Jenkins initiates the CI/CD pipeline defined in the Jenkinsfile stored within the repository.\nJenkins Jenkins runs on an EC2 instance and manages the CI/CD pipeline. It detects code changes in the GitHub repository, builds the Docker image, performs tests, and then pushes the image to Docker Hub. Jenkins then triggers the deployment process, updating the EC2 instance with the new version of the web application. Jenkins also integrates with SonarQube for code quality checks.\nSonarQube SonarQube is used to perform static code analysis, ensuring code quality and security. It is integrated into the pipeline and runs on an EC2 instance, scanning the source code during each pull request or as part of the build process. This helps to catch bugs and vulnerabilities early in the development cycle.\nCI/CD Pipeline Overview Commit to GitHub: A developer commits code to the GitHub repository. Jenkins detects changes: Jenkins triggers the CI/CD pipeline based on the changes detected. Build and test: Jenkins builds the application, runs tests, and performs a SonarQube scan to check for code quality and security issues. Push to Docker Hub: After a successful build, Jenkins pushes the Docker image to Docker Hub. Deploy: Jenkins deploys the latest Docker image to the EC2 instance, updating the public-facing web application. "
+},
+{
+	"uri": "//localhost:1313/3-prerequisites/",
+	"title": "Prerequisites",
+	"tags": [],
+	"description": "",
+	"content": " 1. Virtual Private Cloud (VPC) You will need a Virtual Private Cloud (VPC) to isolate and secure your resources in AWS. Placing services like EC2 instances, RDS databases, and other services inside a VPC ensures network-level security and allows you to define custom Security Groups (SG) and Network Access Control Lists (NACL) for fine-tuned access control.\nPublic Subnet: Hosts the public-app on an EC2 instance, which is accessible via the internet through HTTP/HTTPS. Private Subnet: Hosts the private-db (RDS) that is isolated from public access. It can only communicate with resources inside the VPC, such as the EC2 instance. Security Groups: These act as virtual firewalls, controlling the traffic that flows to and from your EC2 instances, RDS databases, and other services. Best Practice: It is recommended to create a separate VPC for this project instead of using the default VPC to ensure better control over networking and security.\n2. DockerHub Account You need a DockerHub account to host your container images. Once the code is built by Jenkins, the resulting Docker image will be pushed to DockerHub for versioning and reuse.\nCI/CD Pipeline: Jenkins will build Docker images based on the source code pulled from GitHub, and push the images to DockerHub for storage and deployment. Link Refer : Docker Hub\n3. GitHub Repository Ensure you have a GitHub repository set up to host the source code for your application. The CI/CD pipeline will pull the latest version of the code from this repository whenever a commit or pull request is made.\nYou can use my template repo : https://github.com/hoangvh238/Blog-razor-page\n3.1. Create VPC\n3.2 Create Dockerfile "
+},
+{
+	"uri": "//localhost:1313/3-prerequisites/3.1-createvpc/",
+	"title": "VPC",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Search VPC\nStep 2. Create new VPC\nStep 3. Setup and create\nDepending on your requirements, you can choose 1-3 Availability Zones (AZs) if you want to deploy an additional load balancer. You can opt for NAT gateways if you need to connect a private subnet to the external internet. "
+},
+{
+	"uri": "//localhost:1313/3-prerequisites/3.2-create-dockerfile/",
+	"title": "Create Dockerfile",
+	"tags": [],
+	"description": "",
+	"content": "Creating Dockerfile you can ref in : https://github.com/hoangvh238/Blog-razor-page/blob/main/Dockerfile\n"
+},
+{
+	"uri": "//localhost:1313/4-create-service/",
+	"title": "Create Services",
+	"tags": [],
+	"description": "",
+	"content": "Let\u0026rsquo;s set up the service environment to deploy the CI/CD tool.\n4.1. Create RDS\n4.2. Create EC2\n4.3. Setup Security Group "
+},
+{
+	"uri": "//localhost:1313/4-create-service/4.2-create-ec2/4.2.2-create-ec2-for-jenkins/",
+	"title": "Create EC2 for Jenkins",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Search “EC2” and Launch New Instance Step 3. Setup New EC2 Up Storage to 12 GB Step 4. Launch instance "
+},
+{
+	"uri": "//localhost:1313/4-create-service/4.2-create-ec2/4.2.1-create-ec2-for-public-app/",
+	"title": "Create EC2 for Public-app",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Search “EC2” and Launch New Instance When you run 2 EC2 with 2h ⇒ It mean you already used 22 = 4 / 750 free hours .* Step 3. Setup New EC2 When you create 2 EC2 with each have 8GB ⇒ It mean total 16GB / 30 GB free. Step 4. Launch instance "
+},
+{
+	"uri": "//localhost:1313/4-create-service/4.2-create-ec2/4.2.3-create-ec2-for-sonarqube/",
+	"title": "Create EC2 for SonarQube",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Search “EC2” and Launch New Instance Step 3. Setup New EC2 Up Storage to 10 GB Step 4. Launch instance "
+},
+{
+	"uri": "//localhost:1313/4-create-service/4.1-create-rds/",
+	"title": "Create RDS",
+	"tags": [],
+	"description": "",
+	"content": "With principles : \u0026ldquo;Setting up the database before running the web application helps ensure the data structure is clear, avoids retrieval errors, and ensures the application functions properly.”\nStep 1. Search RDS and Create New RDS\nStep 2. Choice Standard crate you can direct custom VPC and subnet for this RDS. Step 3. Step 4. Step 5.\n"
+},
+{
+	"uri": "//localhost:1313/4-create-service/4.1-create-rds/4.1.1-custom-in-dotnet-entity-framework--optional/",
+	"title": "Custom in Dotnet Entity Framework ( optional )",
+	"tags": [],
+	"description": "",
+	"content": " Because this guide don’t use “Key Vault” therefore process will directly read private information in environment file. "
+},
+{
+	"uri": "//localhost:1313/4-create-service/4.2-create-ec2/",
+	"title": "Create EC2",
+	"tags": [],
+	"description": "",
+	"content": "4.2.1. Create EC2 for Public-app\n4.2.2. Create EC2 for Jenkins\n4.2.3. Create EC2 for SonarQube\n"
+},
+{
+	"uri": "//localhost:1313/4-create-service/4.3-setup-security-group/",
+	"title": "Setup Security Group",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Go to EC2 Instances Step 2. Access to public-app Step 3. Repeat with PORT 8080 for Jenkins Step 4. Repeat with PORT 9000 for Sonar "
+},
+{
+	"uri": "//localhost:1313/5-setup-service/5.1-setup-jenkin/5.1.1-setup-jenkin-dashboard/",
+	"title": "Setup Jenkin dashboard",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Step 2. Step 3. Wait to complete…\n"
+},
+{
+	"uri": "//localhost:1313/5-setup-service/5.1-setup-jenkin/5.1.2-create-ci-pipeline/",
+	"title": "Create CI pipeline",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Step 2. You can choice “Freestyle project” if want setup with UI. Step 3. When you set the maximum to \u0026ldquo;2\u0026rdquo;, Jenkins will remove all build history except for the two most recent builds. It help Jenkins not use a disk resource waste. You can use Jenkinfile of me : https://github.com/hoangvh238/Blog-razor-page/blob/main/Jenkinsfile\n5.1.3.1. Setup SonarQube ( optional )\n5.1.3.2. Setup Sonar plugin ( optional)\n5.1.3.3 Setup Docker\n5.1.3.4 Create GitHub webhook\n"
+},
+{
+	"uri": "//localhost:1313/5-setup-service/5.1-setup-jenkin/5.1.2-create-ci-pipeline/5.1.2.1-setup-sonarqube--optional-/",
+	"title": "Setup SonarQube ( optional )",
+	"tags": [],
+	"description": "",
+	"content": "Doesn\u0026rsquo;t lead to new long-term, low-cost, or free work, you should conserve resources by skipping it.\nStep 1. Step 2. Step 3. Step 4. Step 5. Step 6. Step 7. Step 8. Default account is : Login : admin Password: admin Login and change it. Step 9. Step 10. Step 11. Step 12. Step 13. You can use below code or my Jenkinfile https://github.com/hoangvh238/Blog-razor-page/blob/main/Jenkinsfile-CI Step 14. Generate and save it. This key will create and store in Jenkins credientals. \u0026raquo; Let go back Jenkin dashboard\n"
+},
+{
+	"uri": "//localhost:1313/5-setup-service/5.1-setup-jenkin/5.1.2-create-ci-pipeline/5.1.2.2-setup-sonar-plugin--optional/",
+	"title": "Setup Sonar plugin ( optional)",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Install plugins Access Dashboard/Manage Jenkin/Plugins and install SonarQube Scanner. Step 2. Config plugins .NET projects must use MSBuild. If you\u0026rsquo;re not using .NET, you can configure the plugin as shown below: Nodejs or anything Step 3. Create new SonarQube credentails Access Dashboard/Manage Jenkin/Credentials and create new Credentials . In the \u0026ldquo;Secret\u0026rdquo; field, paste the key you last created in the SonarQube dashboard. Step 4. Config global variance for plugins "
+},
+{
+	"uri": "//localhost:1313/5-setup-service/5.1-setup-jenkin/5.1.2-create-ci-pipeline/5.1.2.3--setup-docker/",
+	"title": " Setup Docker",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Install docker plugin Access : Dashboard/Manage Jenkins/Plugin and search docker Step 2. Config plugin Access : Dashboard/Manage Jenkins/ Tools and setting with below. Step 3. Create docker credentials Access Dashboard/Manage Jenkin/Credentials and create new Credentials . The username and password should be your Docker Hub account credentials. "
+},
+{
+	"uri": "//localhost:1313/5-setup-service/5.1-setup-jenkin/5.1.2-create-ci-pipeline/5.1.2.4--create-github-webhook/",
+	"title": " Create GitHub webhook",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Access to your repository Step 2. Step 3. "
+},
+{
+	"uri": "//localhost:1313/5-setup-service/5.1-setup-jenkin/",
+	"title": "Setup Jenkin",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Get access script Step 2. Access to Jenkins instance by SSH You must navigate to the folder containing \u0026ldquo;cicd-key-pair.pem\u0026rdquo;. In this case, I\u0026rsquo;ve saved it in Downloads. Paste the code of above Step 3. Install JRE Installing JRE first prevents Jenkins from needing to reboot during its installation or encountering issues with the Java environment. install JRE 17 : sudo apt install openjdk-17-jre you can ref in : https://www.jenkins.io/doc/book/installing/linux/ Step 4. Install Jenkins Step 6. Install docker sudo apt-get install docker-ce docker-ce-cli [containerd.io](http://containerd.io/) docker-buildx-plugin docker-compose-plugin Step 7. Get Jenkin auth Code Using sudo systemctl status jenkins 5.1.1. Setup Jenkin dashboard\n5.1.2. Create CI pipeline\n5.1.3. Create CD pipeline\n"
+},
+{
+	"uri": "//localhost:1313/5-setup-service/5.1-setup-jenkin/5.1.3-create-cd-pipeline/",
+	"title": "Create CD pipeline",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Step 2. When you set the maximum to \u0026ldquo;2\u0026rdquo;, Jenkins will remove all build history except for the two most recent builds. It help Jenkins not use a disk resource waste. Step 3. Change Kind to “Secret file” and upload your key.pem "
+},
+{
+	"uri": "//localhost:1313/5-setup-service/",
+	"title": "Setup Service ",
+	"tags": [],
+	"description": "",
+	"content": "Let setup detail service 5.1. Setup Jenkin\n5.2. Testing pipeline\n"
+},
+{
+	"uri": "//localhost:1313/5-setup-service/5.2-testing-pipeline/",
+	"title": "Testing pipeline",
+	"tags": [],
+	"description": "",
+	"content": "Check image build after CI pipeline Check status CD The Script of Jenkinfile will check and do “Code First” with EF Core Access production (access through port 80/hhtp as defined in the security group) "
+},
+{
+	"uri": "//localhost:1313/6-clean-resource/",
+	"title": " Clean resource",
+	"tags": [],
+	"description": "",
+	"content": "\u0026ldquo;When clearing resources, ensure to delete them and wait until the service is fully stopped before leave.” Step 1. Delete EC2 Complete when “No matching instances found” ! Step 2. Delete RDS Step 3. Delete VPC "
+},
+{
+	"uri": "//localhost:1313/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "//localhost:1313/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
