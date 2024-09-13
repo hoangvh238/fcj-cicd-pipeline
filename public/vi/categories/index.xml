@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Xây dựng CI/CD cho một dự án ReactJS trên GitLab, sử dụng các dịch vụ AWS như ECR (Elastic Container Registry), Fargate, và EC2 (Elastic Compute Cloud)</title>
+    <title>Categories on CI/CD Pipeline For Dotnet razor page Project Using AWS Services</title>
     <link>//localhost:1313/vi/categories/</link>
-    <description>Recent content in Categories on Xây dựng CI/CD cho một dự án ReactJS trên GitLab, sử dụng các dịch vụ AWS như ECR (Elastic Container Registry), Fargate, và EC2 (Elastic Compute Cloud)</description>
+    <description>Recent content in Categories on CI/CD Pipeline For Dotnet razor page Project Using AWS Services</description>
     <generator>Hugo</generator>
     <language>vi</language>
     <atom:link href="//localhost:1313/vi/categories/index.xml" rel="self" type="application/rss+xml" />

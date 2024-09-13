@@ -7,15 +7,15 @@
 	"content": ""
 },
 {
-	"uri": "//localhost:1313/vi/tags/",
-	"title": "Tags",
+	"uri": "//localhost:1313/vi/",
+	"title": "CI/CD Pipeline For Dotnet razor page Project Using AWS Services",
 	"tags": [],
 	"description": "",
 	"content": ""
 },
 {
-	"uri": "//localhost:1313/vi/",
-	"title": "Xây dựng CI/CD cho một dự án ReactJS trên GitLab, sử dụng các dịch vụ AWS như ECR (Elastic Container Registry), Fargate, và EC2 (Elastic Compute Cloud)",
+	"uri": "//localhost:1313/vi/tags/",
+	"title": "Tags",
 	"tags": [],
 	"description": "",
 	"content": ""

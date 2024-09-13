@@ -1,11 +1,11 @@
 ---
-title : "Building CI/CD Pipeline For ReactJs Project on GitLab Using AWS Services (ECR, Fargate, EC2)"
+title : "CI/CD Pipeline For Dotnet razor page Project Using AWS Services"
 date : "`r Sys.Date()`"
 weight : 1
 chapter : false
 ---
 
-# CI/CD Pipeline For ReactJs Project Using AWS Services
+# CI/CD Pipeline For Dotnet razor page Project Using AWS Services
 
 #### Overview
 

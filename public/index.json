@@ -1,10 +1,10 @@
 [
 {
 	"uri": "//localhost:1313/",
-	"title": "Building CI/CD Pipeline For ReactJs Project on GitLab Using AWS Services (ECR, Fargate, EC2)",
+	"title": "CI/CD Pipeline For Dotnet razor page Project Using AWS Services",
 	"tags": [],
 	"description": "",
-	"content": "CI/CD Pipeline For ReactJs Project Using AWS Services Overview After completing this guide, I hope the student team can implement CI/CD for their project. It\u0026rsquo;s designed to minimize costs and can be used for free for up to 12 months with an AWS account\u0026rsquo;s free tier.\n1. Introduction\n2. Architechture\n3. Prerequisites\n4. Create Service\n5. Setup Service 6. Clean resource\n"
+	"content": "CI/CD Pipeline For Dotnet razor page Project Using AWS Services Overview After completing this guide, I hope the student team can implement CI/CD for their project. It\u0026rsquo;s designed to minimize costs and can be used for free for up to 12 months with an AWS account\u0026rsquo;s free tier.\n1. Introduction\n2. Architechture\n3. Prerequisites\n4. Create Service\n5. Setup Service 6. Clean resource\n"
 },
 {
 	"uri": "//localhost:1313/1-introduce/",
@@ -77,25 +77,11 @@
 	"content": "Let\u0026rsquo;s set up the service environment to deploy the CI/CD tool.\n4.1. Create RDS\n4.2. Create EC2\n4.3. Setup Security Group "
 },
 {
-	"uri": "//localhost:1313/4-create-service/4.2-create-ec2/4.2.2-create-ec2-for-jenkins/",
-	"title": "Create EC2 for Jenkins",
-	"tags": [],
-	"description": "",
-	"content": "Step 1. Search “EC2” and Launch New Instance Step 3. Setup New EC2 Up Storage to 12 GB Step 4. Launch instance "
-},
-{
 	"uri": "//localhost:1313/4-create-service/4.2-create-ec2/4.2.1-create-ec2-for-public-app/",
 	"title": "Create EC2 for Public-app",
 	"tags": [],
 	"description": "",
 	"content": "Step 1. Search “EC2” and Launch New Instance When you run 2 EC2 with 2h ⇒ It mean you already used 22 = 4 / 750 free hours .* Step 3. Setup New EC2 When you create 2 EC2 with each have 8GB ⇒ It mean total 16GB / 30 GB free. Step 4. Launch instance "
-},
-{
-	"uri": "//localhost:1313/4-create-service/4.2-create-ec2/4.2.3-create-ec2-for-sonarqube/",
-	"title": "Create EC2 for SonarQube",
-	"tags": [],
-	"description": "",
-	"content": "Step 1. Search “EC2” and Launch New Instance Step 3. Setup New EC2 Up Storage to 10 GB Step 4. Launch instance "
 },
 {
 	"uri": "//localhost:1313/4-create-service/4.1-create-rds/",
@@ -112,11 +98,25 @@
 	"content": " Because this guide don’t use “Key Vault” therefore process will directly read private information in environment file. "
 },
 {
+	"uri": "//localhost:1313/4-create-service/4.2-create-ec2/4.2.2-create-ec2-for-jenkins/",
+	"title": "Create EC2 for Jenkins",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Search “EC2” and Launch New Instance Step 3. Setup New EC2 Up Storage to 12 GB Step 4. Launch instance "
+},
+{
 	"uri": "//localhost:1313/4-create-service/4.2-create-ec2/",
 	"title": "Create EC2",
 	"tags": [],
 	"description": "",
 	"content": "4.2.1. Create EC2 for Public-app\n4.2.2. Create EC2 for Jenkins\n4.2.3. Create EC2 for SonarQube\n"
+},
+{
+	"uri": "//localhost:1313/4-create-service/4.2-create-ec2/4.2.3-create-ec2-for-sonarqube/",
+	"title": "Create EC2 for SonarQube",
+	"tags": [],
+	"description": "",
+	"content": "Step 1. Search “EC2” and Launch New Instance Step 3. Setup New EC2 Up Storage to 10 GB Step 4. Launch instance "
 },
 {
 	"uri": "//localhost:1313/4-create-service/4.3-setup-security-group/",
@@ -144,7 +144,7 @@
 	"title": "Setup SonarQube ( optional )",
 	"tags": [],
 	"description": "",
-	"content": "Doesn\u0026rsquo;t lead to new long-term, low-cost, or free work, you should conserve resources by skipping it.\nStep 1. Step 2. Step 3. Step 4. Step 5. Step 6. Step 7. Step 8. Default account is : Login : admin Password: admin Login and change it. Step 9. Step 10. Step 11. Step 12. Step 13. You can use below code or my Jenkinfile https://github.com/hoangvh238/Blog-razor-page/blob/main/Jenkinsfile-CI Step 14. Generate and save it. This key will create and store in Jenkins credientals. \u0026raquo; Let go back Jenkin dashboard\n"
+	"content": "Doesn\u0026rsquo;t lead to new long-term, low-cost, or free work, you should conserve resources by skipping it.\nStep 1. Step 2. Step 3. Step 4. Step 5. Step 6. Step 7. Change console to start to run with background services Step 8. Default account is : Login : admin Password: admin Login and change it. Step 9. Step 10. Step 11. Step 12. Step 13. You can use below code or my Jenkinfile https://github.com/hoangvh238/Blog-razor-page/blob/main/Jenkinsfile-CI Step 14. Generate and save it. This key will create and store in Jenkins credientals. \u0026raquo; Let go back Jenkin dashboard\n"
 },
 {
 	"uri": "//localhost:1313/5-setup-service/5.1-setup-jenkin/5.1.2-create-ci-pipeline/5.1.2.2-setup-sonar-plugin--optional/",
@@ -172,7 +172,7 @@
 	"title": "Setup Jenkin",
 	"tags": [],
 	"description": "",
-	"content": "Step 1. Get access script Step 2. Access to Jenkins instance by SSH You must navigate to the folder containing \u0026ldquo;cicd-key-pair.pem\u0026rdquo;. In this case, I\u0026rsquo;ve saved it in Downloads. Paste the code of above Step 3. Install JRE Installing JRE first prevents Jenkins from needing to reboot during its installation or encountering issues with the Java environment. install JRE 17 : sudo apt install openjdk-17-jre you can ref in : https://www.jenkins.io/doc/book/installing/linux/ Step 4. Install Jenkins Step 6. Install docker sudo apt-get install docker-ce docker-ce-cli [containerd.io](http://containerd.io/) docker-buildx-plugin docker-compose-plugin Step 7. Get Jenkin auth Code Using sudo systemctl status jenkins 5.1.1. Setup Jenkin dashboard\n5.1.2. Create CI pipeline\n5.1.3. Create CD pipeline\n"
+	"content": "Step 1. Get access script Step 2. Access to Jenkins instance by SSH You must navigate to the folder containing \u0026ldquo;cicd-key-pair.pem\u0026rdquo;. In this case, I\u0026rsquo;ve saved it in Downloads. Paste the code of above Step 3. Install JRE Installing JRE first prevents Jenkins from needing to reboot during its installation or encountering issues with the Java environment. install JRE 17 : sudo apt install openjdk-17-jre you can ref in : https://www.jenkins.io/doc/book/installing/linux/ Step 4. Install Jenkins Step 5. Get Jenkin auth Code Using sudo systemctl status jenkins 5.1.1. Setup Jenkin dashboard\n5.1.2. Create CI pipeline\n5.1.3. Create CD pipeline\n"
 },
 {
 	"uri": "//localhost:1313/5-setup-service/5.1-setup-jenkin/5.1.3-create-cd-pipeline/",

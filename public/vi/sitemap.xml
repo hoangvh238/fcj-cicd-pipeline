@@ -14,18 +14,6 @@
                 href="//localhost:1313/vi/categories/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/tags/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="//localhost:1313/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="vi"
-                href="//localhost:1313/vi/tags/"
-                />
-  </url><url>
     <loc>//localhost:1313/vi/</loc>
     <xhtml:link
                 rel="alternate"
@@ -36,6 +24,18 @@
                 rel="alternate"
                 hreflang="vi"
                 href="//localhost:1313/vi/"
+                />
+  </url><url>
+    <loc>//localhost:1313/vi/tags/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="//localhost:1313/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="//localhost:1313/vi/tags/"
                 />
   </url>
 </urlset>
