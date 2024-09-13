@@ -9,7 +9,8 @@ chapter : false
 
 #### Overview
 
-After completing this guide, I hope the student team can implement CI/CD for their project. It's designed to minimize costs and can be used for free for up to 12 months with an AWS account's free tier.
+After completing this guide, I hope the student team can implement CI/CD for their project. It's designed to minimize costs and can be used for free for up to 12 months with an AWS account's free tier. 🦾
+
 
 [**1. Introduction**](./1-Introduce/_index.md)
 
